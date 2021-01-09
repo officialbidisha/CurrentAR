@@ -1,0 +1,37 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#" style="color: #007bff">AutoBuds2</a>
+  <button
+    class="navbar-toggler"
+    type="button"
+    data-toggle="collapse"
+    data-target="#navbarNavAltMarkup"
+    aria-controls="navbarNavAltMarkup"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="navbar-nav">
+      <a class="nav-link active" routerLink="/"
+        >Home
+        <!--<span class="sr-only">(current)</span>---></a
+      >
+      <!-- <div class="navLinks"><a [routerLink]="['/home']">home</a> -->
+      <a class="nav-link" routerLink="/aboutus">About Us</a>      
+    </div>
+  </div>
+  <form class="form-inline">
+    <div class="content-box" role="main">
+      <div class="theme-options">
+     
+        <div id="theme-blue"  class="btn"  (click)="setTheme('theme-blue')"></div>
+        <div id="theme-black" class="btn" (click)="setTheme('theme-black')"></div>
+        <div id="theme-orange" class="btn" (click)="setTheme('theme-orange')"></div>
+      </div>
+    </div>
+  </form>
+</nav>
+<div class="content-box{{storedTheme}}">
+  <router-outlet></router-outlet>
+</div>

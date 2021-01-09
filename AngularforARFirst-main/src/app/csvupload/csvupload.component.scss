@@ -1,0 +1,33 @@
+
+.csvMainContainer {
+  max-width: 960px;
+  margin: 0px auto;
+  background-color: white;
+  color: black;
+  background-color: rgb(109 102 102 / 53%);
+  
+  
+}
+
+ 
+.selectfile {
+  border: 1px dash #000;
+  padding: 10px 0;
+  margin-bottom: 10px;
+}
+
+.csvContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.btn {
+  min-width: 150px;
+  width: 150px;
+  padding: 10px;
+}
+
+#FileName{
+  width:290px;
+  margin-right: 10px;
+}

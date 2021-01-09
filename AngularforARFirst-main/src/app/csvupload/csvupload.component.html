@@ -1,0 +1,123 @@
+<div class="csvMainContainer">
+  <p-toast position="top-right"></p-toast>
+  <div class="p-4"></div>
+  <h3
+    class="d-flex justify-content-center"
+    style="color: rgb(255 255 255); text-shadow: 2px 2px 4px rgb(0 32 70)"
+  >
+    CSV to OData Converter
+  </h3>
+  <div class="pb-5"></div>
+
+  <div class="container csvContainer p-4">
+    <div>
+      <p-fileUpload
+        name="demo[]"
+        #csvFile
+        [showUploadButton]="false"
+        [showCancelButton]="true"
+        [multiple]="false"
+        accept=".csv"
+        chooseLabel="Browse"
+        invalidFileTypeMessageSummary="Invalid file format"
+        invalidFileTypeMessageDetail="allowed file format:.csv"
+        (onSelect)="onFileSelect($event)"
+        (onRemove)="onFileRemoved()"
+        maxFileSize="1000000"
+      >
+        <ng-template pTemplate="content">
+          <ul *ngIf="uploadedFiles.length">
+            <li *ngFor="let file of uploadedFiles">
+              {{ file.name }} - {{ file.size }} bytes
+            </li>
+          </ul>
+        </ng-template>
+      </p-fileUpload>
+      <div class="p-2"></div>
+      <input type="text" pInputText [(ngModel)]="CSVFileName" id="FileName" />
+
+      <button
+        pButton
+        type="button"
+        label="Save File"
+        [disabled]="!fileSelected || CSVFileName === ''"
+        (click)="upload()"
+      ></button>
+      <div class="p-2"></div>
+
+      <div
+        *ngIf="me !== 0"
+        class="row d-flex justify-content-center"
+        style="background-color: #4c5867"
+      ></div>
+      <div class="p-2"></div>
+
+      <button
+        pButton
+        type="button"
+        class="center p-button-raised p-button-rounded"
+        (click)="pdata()"
+      >
+        View Urls
+      </button>
+      <div class="p-2"></div>
+      <div
+        *ngIf="pdtUrl.length > 0"
+        class="row d-flex justify-content-center card"
+        style="background-color: #4c5867"
+      >
+        <p-table
+          [value]="pdtUrl"
+          [columns]="csvCols"
+          [paginator]="true"
+          [rowsPerPageOptions]="[5, 10, 15, 20, 25, 50, 100]"
+          [showCurrentPageReport]="true"
+          [autoLayout]="true"
+          [rows]="10"
+        >
+          <ng-template pTemplate="header" let-columns>
+            <tr>
+              <th *ngFor="let col of columns">
+                {{ col.header }}
+              </th>
+            </tr>
+          </ng-template>
+          <ng-template
+            pTemplate="body"
+            let-rowData
+            let-columns="columns"
+            let-rowIndex="rowIndex"
+          >
+            <tr>
+              <td *ngFor="let col of columns" [ngSwitch]="col.field">
+                <ng-template [ngSwitchCase]="'sno'">
+                  {{ rowIndex + 1 }}
+                </ng-template>
+                <ng-template [ngSwitchCase]="'productUrl'">
+                  <a href="{{ rowData.pUrl }}" target="_blank">{{
+                    rowData.productUrl
+                  }}</a>
+                </ng-template>
+                <ng-template [ngSwitchCase]="'metaDataUrl'">
+                  <a href="{{ rowData.mUrl }}" target="_blank">{{
+                    rowData.metaDataUrl
+                  }}</a>
+                </ng-template>
+                <span *ngSwitchDefault>{{ rowData[col.field] }}</span>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+
+      <div *ngIf="pdtUrl.length === 0">
+        <p-message
+          class="d-flex justify-content-center"
+          severity="info"
+          text="Please Upload a .csv File First"
+        ></p-message>
+      </div>
+    </div>
+  </div>
+</div>
+
